@@ -18,6 +18,33 @@ class CardPage extends StatelessWidget {
               height: 30.0,
             ),
             _cardTipo2(),
+            SizedBox(
+              height: 30.0,
+            ),
+            _cardTipo1(),
+            SizedBox(
+              height: 30.0,
+            ),
+            _cardTipo2(),
+            SizedBox(
+              height: 30.0,
+            ),
+            _cardTipo1(),
+            SizedBox(
+              height: 30.0,
+            ),
+            _cardTipo2(),
+            SizedBox(
+              height: 30.0,
+            ),
+            _cardTipo1(),
+            SizedBox(
+              height: 30.0,
+            ),
+            _cardTipo2(),
+            SizedBox(
+              height: 30.0,
+            ),
           ],
         ),
       ),
@@ -26,6 +53,8 @@ class CardPage extends StatelessWidget {
 
   Widget _cardTipo1() {
     return Card(
+      elevation: 10.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       child: Column(
         children: [
           ListTile(
@@ -56,7 +85,9 @@ class CardPage extends StatelessWidget {
   }
 
   _cardTipo2() {
-    return Card(
+    final card = Container(
+      // elevation: 10.0,
+      // clipBehavior: Clip.antiAlias,
       child: Column(
         children: [
           FadeInImage(
@@ -64,7 +95,7 @@ class CardPage extends StatelessWidget {
                 'https://upload.wikimedia.org/wikipedia/commons/9/91/Oahu_Landscape.jpg'),
             placeholder: AssetImage('assets/jar-loading.gif'),
             fadeInDuration: Duration(milliseconds: 200),
-            height: 140.0,
+            height: 150.0,
             fit: BoxFit.cover,
           ),
           // Image(
@@ -76,6 +107,23 @@ class CardPage extends StatelessWidget {
             padding: EdgeInsets.all(10.0),
           )
         ],
+      ),
+    );
+
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(40.0),
+          color: Colors.white,
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+                color: Colors.black26,
+                blurRadius: 10.0,
+                spreadRadius: 2.0,
+                offset: Offset(2.0, 10.0)),
+          ]),
+      child: ClipRRect(
+        child: card,
+        borderRadius: BorderRadius.circular(40.0),
       ),
     );
   }
