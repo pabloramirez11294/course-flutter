@@ -10,6 +10,10 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   String _name = '';
   String _email = '';
+  String _fecha = '';
+  String _opcionSeleccionada = 'volar';
+  List<String> _poderes = ['volar', 'rayos x', 'fuerza', 'velocidad'];
+  TextEditingController _inputField = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +29,10 @@ class _InputPageState extends State<InputPage> {
           _createEmail(),
           Divider(),
           _createPasssword(),
+          Divider(),
+          _createFecha(context),
+          Divider(),
+          _createDropdown(),
           Divider(),
           _createPerson(),
         ],
@@ -56,7 +64,9 @@ class _InputPageState extends State<InputPage> {
 
   Widget _createPerson() {
     return ListTile(
-      title: Text('Name: $_name \n\nEmail: $_email'),
+      title: Text('Name: $_name'),
+      subtitle: Text('Email: $_email'),
+      trailing: Text(_opcionSeleccionada),
     );
   }
 
@@ -92,5 +102,69 @@ class _InputPageState extends State<InputPage> {
         // print(_name);
 
         );
+  }
+
+  Widget _createFecha(BuildContext context) {
+    return TextField(
+        enableInteractiveSelection: false,
+        controller: _inputField,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
+          hintText: 'Fecha de nacimiento',
+          labelText: 'Fecha de nacimiento',
+          suffixIcon: Icon(Icons.perm_contact_calendar),
+          icon: Icon(Icons.calendar_today),
+        ),
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+          _selectDate(context);
+        });
+  }
+
+  void _selectDate(BuildContext context) async {
+    DateTime picker = await showDatePicker(
+      context: context,
+      initialDate: new DateTime.now(),
+      firstDate: new DateTime(2018),
+      lastDate: new DateTime(2025),
+      locale: Locale('es', 'ES'),
+    );
+    if (picker != null) {
+      setState(() {
+        _fecha = picker.toString();
+        _inputField.text = _fecha;
+      });
+    }
+  }
+
+  List<DropdownMenuItem<String>> getOpcionesDropdown() {
+    List<DropdownMenuItem<String>> lista = new List();
+    _poderes.forEach((poder) {
+      lista.add(DropdownMenuItem(
+        child: Text(poder),
+        value: poder,
+      ));
+    });
+    return lista;
+  }
+
+  Widget _createDropdown() {
+    return Row(
+      children: [
+        Icon(Icons.select_all),
+        SizedBox(
+          width: 30.0,
+        ),
+        DropdownButton(
+          value: _opcionSeleccionada,
+          items: getOpcionesDropdown(),
+          onChanged: (opt) {
+            setState(() {
+              _opcionSeleccionada = opt;
+            });
+          },
+        )
+      ],
+    );
   }
 }
